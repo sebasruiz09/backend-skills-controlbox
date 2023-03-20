@@ -13,7 +13,7 @@ export class OficinasService {
     private readonly oficinasRepository: Repository<Oficinas>,
     private readonly corresponsalesService: CorresponsalesService,
   ) {}
-  async create(createOficinaDto: OficinaDto) {
+  async create(createOficinaDto) {
     await this.corresponsalesService.findOne(
       createOficinaDto['ofiCorresponsal'],
     );
@@ -22,7 +22,7 @@ export class OficinasService {
   }
 
   findAll() {
-    return this.oficinasRepository.find();
+    return this.oficinasRepository.find({});
   }
 
   async findOne(id: string) {

@@ -1,4 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Corresponsales } from './corresponsales.entity';
+import { Giros } from './giros.entity';
 
 @Entity({
   name: 'OFICINAS',
@@ -17,8 +26,19 @@ export class Oficinas {
   })
   ofiNombre: string;
 
-  @Column({
+  @ManyToOne(
+    () => Corresponsales,
+    (corresponsales) => corresponsales.oficinas,
+    {
+      eager: true,
+      onDelete: 'CASCADE',
+    },
+  )
+  @JoinColumn({
     name: 'OFI_CORRESPONSAL_ID',
   })
-  ofiCorresponsalId: string;
+  ofiCorresponsalId: Corresponsales;
+
+  @OneToMany(() => Giros, (Giros) => Giros.girOficinaId)
+  giros: Giros[] | any;
 }

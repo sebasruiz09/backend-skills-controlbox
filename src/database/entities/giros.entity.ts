@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Oficinas } from './oficinas.entity';
 
 @Entity({
   name: 'GIROS',
@@ -11,15 +18,16 @@ export class Giros {
 
   @Column({
     name: 'GIR_RECIBO',
-    type: 'varchar',
-    length: 80,
-    unique: true,
+    type: 'integer',
   })
-  gitRecibo: string;
+  girRecibo: number;
 
-  @Column({
+  @ManyToOne(() => Oficinas, (Oficinas) => Oficinas.giros, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({
     name: 'GIR_OFICINA_ID',
-    type: 'varchar',
   })
   girOficinaId: string;
 }

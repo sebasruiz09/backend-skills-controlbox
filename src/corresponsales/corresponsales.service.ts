@@ -18,7 +18,22 @@ export class CorresponsalesService {
   }
 
   async findAll() {
-    return await this.corresponsalesRepository.find();
+    const results = await this.corresponsalesRepository.find({
+      relations: {
+        oficinas: {
+          ofiCorresponsalId: false,
+          giros: true,
+        },
+      },
+    });
+
+    results.forEach((element) => {
+      element.oficinas.forEach((value) => {
+        value.giros = value.giros.length;
+      });
+    });
+
+    return results;
   }
 
   async findOne(id: string) {

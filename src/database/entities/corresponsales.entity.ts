@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Oficinas } from './oficinas.entity';
 
 @Entity({
   name: 'CORRESPONSALES',
@@ -16,4 +17,7 @@ export class Corresponsales {
     unique: true,
   })
   corNombre: string;
+
+  @OneToMany(() => Oficinas, (Oficinas) => Oficinas.ofiCorresponsalId)
+  oficinas: Oficinas[];
 }

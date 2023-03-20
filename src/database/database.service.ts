@@ -10,16 +10,14 @@ export class DatabaseService implements TypeOrmOptionsFactory {
 
   async createTypeOrmOptions(): Promise<TypeOrmModuleOptions> {
     const config: TypeOrmModuleOptions = {
-      type: 'mysql',
-      url: this.configService.get<string>('URL'),
+      type: 'postgres',
+      host: this.configService.get<string>('HOST'),
+      database: this.configService.get<string>('DBNAME'),
+      username: this.configService.get<string>('DBUSER'),
+      password: this.configService.get<string>('DBPASSWORD'),
+      synchronize: true,
       entities: [Corresponsales, Giros, Oficinas],
-      // synchronize: tre,
       autoLoadEntities: true,
-      extra: {
-        ssl: {
-          rejectUnauthorized: false,
-        },
-      },
     };
     return config;
   }
